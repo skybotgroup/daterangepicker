@@ -1,6 +1,6 @@
 <?php
 
-namespace Encore\DateRangePicker;
+namespace Skybotgroup\DateRangePicker;
 
 use Encore\Admin\Form\Field;
 
@@ -15,20 +15,20 @@ class DateRangePicker extends Field
     /**
      * @var string
      */
-    protected $view = 'laravel-admin-daterangepicker::daterangepicker';
+    protected $view = 'daterangepicker::daterangepicker';
 
     /**
      * @var array
      */
     protected static $css = [
-        'vendor/laravel-admin-ext/daterangepicker/daterangepicker.css',
+        'vendor/skybotgroup/daterangepicker/daterangepicker.css',
     ];
 
     /**
      * @var array
      */
     protected static $js = [
-        'vendor/laravel-admin-ext/daterangepicker/daterangepicker.js',
+        'vendor/skybotgroup/daterangepicker/daterangepicker.js',
     ];
 
     protected $format = 'YYYY-MM-DD';

@@ -1,6 +1,6 @@
 <?php
 
-namespace Encore\DateRangePicker;
+namespace Skybotgroup\DateRangePicker;
 
 use Encore\Admin\Extension;
 
