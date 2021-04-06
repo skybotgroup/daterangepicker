@@ -3,6 +3,7 @@
 namespace Skybotgroup\DateRangePicker;
 
 use Encore\Admin\Form\Field;
+use Illuminate\Support\Arr;
 
 /**
  * Class DateRangePicker
@@ -73,6 +74,13 @@ class DateRangePicker extends Field
         return $this->options(compact('ranges'));
     }
 
+    public function defaultRange($range){
+        return $this->options([
+            'startDate' => $range[0],
+            'endDate' => $range[1]
+        ]);
+    }
+
     /**
      * Set date format.
      *
@@ -91,37 +99,41 @@ class DateRangePicker extends Field
      */
     public function render()
     {
-        array_set($this->options, 'locale.format', $this->format);
+        Arr::set($this->options, 'locale.format', $this->format);
 
         $global = DateRangePickerExtension::config('config', []);
 
-        $options = json_encode(array_merge($global, $this->options));
+        $this->options($global);
 
-        $locale = config('app.locale');
-
-        $classSelector = join('_', $this->getElementClass());
-
-        $this->script = <<<SCRIPT
-
-moment.locale('$locale');
-
-$('.{$classSelector}').daterangepicker($options);
-
-SCRIPT;
-
-        if ($this->multiple) {
-            $this->script .= <<<SCRIPT
-$('.{$classSelector}').on('apply.daterangepicker', function(ev, picker) {
-  var range = $('.{$classSelector}').val().split(' - ');
-  $('#{$this->id['start']}').val(range[0]);
-  $('#{$this->id['end']}').val(range[1]);
-});
-SCRIPT;
-        }
+        $this->script = $this->script();
 
         $this->value['range'] = implode(' - ', $this->value());
         $this->column['range'] = join('_', $this->column);
 
-        return parent::render()->with(['multiple' => $this->multiple]);
+        $this->variables['multiple'] = $this->multiple;
+
+        return parent::render();
+    }
+
+    public function script()
+    {
+        $options = json_encode($this->options);
+        $locale = config('app.locale');
+        $classSelector = join('_', $this->getElementClass());
+
+        $script = "
+            moment.locale('$locale');
+            $('.{$classSelector}').daterangepicker($options);
+        ";
+        if ($this->multiple) {
+            $script .= "
+                $('.{$classSelector}').on('apply.daterangepicker', function(ev, picker) {
+                    var range = $('.{$classSelector}').val().split(' - ');
+                    $('#{$this->id['start']}').val(range[0]);
+                    $('#{$this->id['end']}').val(range[1]);
+                });
+            ";
+        }
+        return $script;
     }
 }
