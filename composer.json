@@ -1,5 +1,5 @@
 {
-    "name": "laravel-admin-ext/daterangepicker",
+    "name": "skybotgroup/daterangepicker",
     "description": "Integrates daterangepicker into laravel-admin",
     "type": "library",
     "keywords": ["laravel-admin", "extension", "form", "daterangepicker"],
