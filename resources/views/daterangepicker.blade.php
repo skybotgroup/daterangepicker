@@ -1,6 +1,6 @@
 <div class="{{$viewClass['form-group']}} {!! !$errors->has($errorKey) ? '' : 'has-error' !!}">
 
-    <label for="{{$id['start']}}" class="{{$viewClass['label']}} control-label">{{$label}}</label>
+    <label for="{{$multiple?$id['start']:$id}}" class="{{$viewClass['label']}} control-label">{{$label}}</label>
 
     <div class="{{$viewClass['field']}}">
 
@@ -12,12 +12,12 @@
 
             @if($multiple)
 
-                <input value="{{ old($column['range'], $value['range']) }}" name="{{$name['range']}}" class="form-control {{$class['start']}}_{{$class['end']}}" style="width: 300px" {!! $attributes !!} />
+                <input value="{{ old($column['range'], $value['range']) }}" name="{{$name['range']}}" class="form-control {{$class['start']}}_{{$class['end']}}" style="width: 100%" {!! $attributes !!} />
 
                 <input type="hidden" id="{{$id['start']}}" name="{{$name['start']}}" value="{{ old($column['start'], $value['start']) }}"/>
                 <input type="hidden" id="{{$id['end']}}" name="{{$name['end']}}" value="{{ old($column['end'], $value['end']) }}"/>
             @else
-                <input {!! $attributes !!} />
+                <input value="{{ old($column, $value) }}" name="{{$name}}" class="form-control {{$class}}" style="width: 100%" {!! $attributes !!} />
             @endif
 
 

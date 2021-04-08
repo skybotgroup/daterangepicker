@@ -47,6 +47,7 @@ class DateRangePicker extends Field
     public function __construct($column, $arguments = [])
     {
         if (is_string($column)) {
+            $this->options(['singleDatePicker' => true]);
             return parent::__construct($column, $arguments);
         }
 
@@ -62,6 +63,11 @@ class DateRangePicker extends Field
             $this->multiple = true;
         }
     }
+
+    protected $width = [
+        'label' => 2,
+        'field' => 10,
+    ];
 
     /**
      * Predefine Date Ranges.
@@ -107,8 +113,12 @@ class DateRangePicker extends Field
 
         $this->script = $this->script();
 
-        $this->value['range'] = implode(' - ', $this->value());
-        $this->column['range'] = join('_', $this->column);
+        if ($this->multiple){
+            $this->value['range'] = implode(' - ', $this->value());
+            $this->column['range'] = join('_', $this->column);
+        }else{
+            $this->value = $this->value();
+        }
 
         $this->variables['multiple'] = $this->multiple;
 
