@@ -62,6 +62,14 @@ class DateRangePicker extends Field
 
             $this->multiple = true;
         }
+        /* Localisation */
+        $this->options([
+            'locale' => [
+                'applyLabel' => __("Apply"),
+                'cancelLabel' => __("Cancel"),
+                'customRangeLabel' => __("Custom Range"),
+            ]
+        ]);
     }
 
     protected $width = [
