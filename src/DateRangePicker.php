@@ -122,7 +122,7 @@ class DateRangePicker extends Field
         $this->script = $this->script();
 
         if ($this->multiple){
-            if (version_compare(PHP_VERSION, '7.4.0', '>=')) {
+            if (version_compare(PHP_VERSION, '8.0.0', '>=')) {
                 $this->value['range'] = implode(' - ', $this->value());
                 $this->column['range'] = implode('_', $this->column);
             }else{
