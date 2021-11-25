@@ -122,8 +122,13 @@ class DateRangePicker extends Field
         $this->script = $this->script();
 
         if ($this->multiple){
-            $this->value['range'] = implode(' - ', $this->value());
-            $this->column['range'] = join('_', $this->column);
+            if (version_compare(PHP_VERSION, '7.4.0', '>=')) {
+                $this->value['range'] = implode(' - ', $this->value());
+                $this->column['range'] = implode('_', $this->column);
+            }else{
+                $this->value['range'] = implode( $this->value(), ' - ');
+                $this->column['range'] = implode($this->column, '_');
+            }
         }else{
             $this->value = $this->value();
         }
@@ -137,8 +142,11 @@ class DateRangePicker extends Field
     {
         $options = json_encode($this->options);
         $locale = config('app.locale');
-        $classSelector = join('_', $this->getElementClass());
-
+        if (version_compare(PHP_VERSION, '7.4.0', '>=')) {
+            $classSelector = implode('_', $this->getElementClass());
+        }else{
+            $classSelector = implode($this->getElementClass(), '_');
+        }
         $script = "
             moment.locale('$locale');
             $('.{$classSelector}').daterangepicker($options);
