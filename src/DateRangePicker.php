@@ -142,7 +142,7 @@ class DateRangePicker extends Field
     {
         $options = json_encode($this->options);
         $locale = config('app.locale');
-        if (version_compare(PHP_VERSION, '7.4.0', '>=')) {
+        if (version_compare(PHP_VERSION, '8.0.0', '>=')) {
             $classSelector = implode('_', $this->getElementClass());
         }else{
             $classSelector = implode($this->getElementClass(), '_');
